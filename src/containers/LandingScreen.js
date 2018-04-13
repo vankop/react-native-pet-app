@@ -3,7 +3,7 @@ import Touchable from 'react-native-platform-touchable';
 import {Button, Text, View} from 'react-native';
 
 import { mainColor, touchColor } from '../design/colors';
-import { hitSlop } from '../design/misc';
+import {appHeaderOptions, hitSlop} from '../design/misc';
 
 export default function LandingScreen({ navigation }) {
     return (
@@ -48,13 +48,7 @@ LandingScreen.navigationOptions = ({ navigation }) => {
             />
         ),
         title: 'My Cool App',
-        headerStyle: {
-            backgroundColor: mainColor,
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold',
-        }
+        ...appHeaderOptions
     };
 };
 

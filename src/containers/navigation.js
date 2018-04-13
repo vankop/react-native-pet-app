@@ -1,9 +1,11 @@
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { StackNavigator, DrawerNavigator, SwitchNavigator } from 'react-navigation';
 
 import LandingScreen from './LandingScreen';
 import FirstScreen from './FirstScreen';
 import SecondScreen from './SecondScreen';
 import ModalScreen from './ModalScreen';
+import SignInScreen from './notAuthorized/SignInScreen';
+import LoadingScreen from './LoadingScreen';
 
 export const MainStack = StackNavigator({
     Home: { screen: LandingScreen },
@@ -11,17 +13,31 @@ export const MainStack = StackNavigator({
     Second: { screen: SecondScreen }
 });
 
-export const RootStack = DrawerNavigator(
+export const AppStack = DrawerNavigator({
+    Main: {
+        screen: MainStack,
+    },
+    MyModal: {
+        screen: ModalScreen,
+    },
+}, {
+    mode: 'modal',
+    headerMode: 'none',
+});
+
+export const AuthStack = StackNavigator({
+    Main: {
+        screen: SignInScreen
+    }
+});
+
+export const RootStack = SwitchNavigator(
     {
-        Main: {
-            screen: MainStack,
-        },
-        MyModal: {
-            screen: ModalScreen,
-        },
+        AuthLoading: LoadingScreen,
+        App: AppStack,
+        Auth: AuthStack,
     },
     {
-        mode: 'modal',
-        headerMode: 'none',
+        initialRouteName: 'AuthLoading'
     }
 );
