@@ -1,11 +1,11 @@
 import { StackNavigator, DrawerNavigator, SwitchNavigator } from 'react-navigation';
 
 import LandingScreen from './LandingScreen';
-import FirstScreen from './FirstScreen';
-import SecondScreen from './SecondScreen';
-import ModalScreen from './ModalScreen';
+import FirstScreen from './authorized/FirstScreen';
+import SecondScreen from './authorized/SecondScreen';
+import ModalScreen from './authorized/ModalScreen';
 import SignInScreen from './notAuthorized/SignInScreen';
-import LoadingScreen from './LoadingScreen';
+import LoadingScreen from './RootScreen';
 
 export const MainStack = StackNavigator({
     Home: { screen: LandingScreen },
