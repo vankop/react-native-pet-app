@@ -28,8 +28,6 @@ export default class LandingScreen extends Component {
     constructor({ session }) {
         super();
 
-        this.props.
-
         this.handleAppStateChange = this.handleAppStateChange.bind(this);
     }
 

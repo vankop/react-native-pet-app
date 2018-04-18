@@ -1,5 +1,16 @@
-export const signOutActionType = 'SIGN_OUT';
-export const signInActionType = 'SIGN_IN';
+import {
+    authorizedAppState,
+    unauthorizedAppState
+} from '../../security/appState';
 
-export const signOutAction = { type: signOutActionType };
-export const signInAction = { type: signInActionType };
+export const appStateActionType = 'APP_STATE';
+
+export const signOutAction = {
+    type: appStateActionType,
+    payload: authorizedAppState
+};
+
+export const signInAction = {
+    type: appStateActionType,
+    payload: unauthorizedAppState
+};
