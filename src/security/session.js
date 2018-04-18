@@ -12,12 +12,9 @@ export async function getSession() {
 }
 
 export async function setSession(session) {
-    return (
-        RNSecureKeyStore.set(sessionKey, session)
-            .then(() => {
-                if (fetchedSession !== null) {
-                    fetchedSession = fetchedSession.then(() => session);
-                }
-            })
-    );
+    await RNSecureKeyStore.set(sessionKey, session);
+
+    if (fetchedSession !== null) {
+        fetchedSession = session;
+    }
 }

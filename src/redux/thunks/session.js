@@ -19,11 +19,12 @@ export async function checkSessionThunk(dispatch) {
 export function setSessionThunkCreator(session) {
     return async function setSessionThunk(dispatch) {
         const [error] = handle(setSession(session));
-        dispatch(signInAction);
 
         if (error) {
             throw error;
         }
+
+        dispatch(signInAction);
 
         return true;
     }

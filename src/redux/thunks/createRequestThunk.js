@@ -3,6 +3,7 @@ import { clone } from 'lodash';
 import ApiUtils from '../../network/ApiUtils';
 import {setSession} from '../../security/session';
 import {signOutAction} from '../actions/appState';
+import {setSessionThunkCreator} from './session';
 
 function signOutThunk(dispatch) {
     setSession(null);
@@ -11,8 +12,7 @@ function signOutThunk(dispatch) {
 }
 
 export const createRequestThunk = ({
-   actionCreators: [startActionCreator, failureActionCreator, successActionCreator] = [],
-   file
+   actionCreators: [startActionCreator, failureActionCreator, successActionCreator] = []
 }, apiUri) =>
     function requestThunk(requestPayload) {
         return function request(dispatch, getState) {
@@ -30,16 +30,19 @@ export const createRequestThunk = ({
                 //     ));
                 // }
 
-                if (errorCode === 401) {
-                    history.push('/login');
-                }
+                // if (errorCode === 401) {
+                //     history.push('/login');
+                // }
 
+                console.log('______________________ request error ______________________');
+                console.log(`msg: ${errorMessage}`);
+                console.log(`code: ${errorCode}`);
                 return Promise.reject(errorMessage);
             };
 
             return ApiUtils
                 .post(apiUri, requestPayload)
-                .then((result = []) => {
+                .then(({ result = [], session }) => {
                     if (successActionCreator) {
                         dispatch(successActionCreator(
                             result,
@@ -47,6 +50,11 @@ export const createRequestThunk = ({
                             getState
                         ));
                     }
+
+                    if (session) {
+                        dispatch(setSessionThunkCreator(session));
+                    }
+
 
                     return result;
                 }).catch(errorHandler);

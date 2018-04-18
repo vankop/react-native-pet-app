@@ -1,9 +1,11 @@
+﻿import { BACKEND_URL, API_TOKEN } from 'react-native-dotenv'
+
 import { getSession } from '../security/session';
 import extractDeviceSensitiveData from '../security/device';
 import { handle } from '../utils/async';
 
-const endpoint = process.env.BACKEND_URL;
-const token = process.env.API_TOKEN;
+const endpoint = BACKEND_URL;
+const token = API_TOKEN;
 const requestSecondsTimeOut = 15;
 
 async function setRequestCapacity(headers, body) {
@@ -37,7 +39,7 @@ async function setRequestCapacity(headers, body) {
 function timeout(promise) {
     return new Promise((resolve, reject) => {
         const timeOutId = setTimeout(() => {
-            const error = { errorMessage: 'Превышено время ожидания ответа сервера', errorCode: 500 };
+            const error = { errorMessage: 'Connection timeout', errorCode: 500 };
             reject(error);
         }, requestSecondsTimeOut * 1000);
         promise
@@ -46,7 +48,7 @@ function timeout(promise) {
                 resolve(data);
             }).catch(() => {
             clearTimeout(timeOutId);
-            const error = { errorCode: 500, errorMessage: 'Отсутствует соединение с сервером' };
+            const error = { errorCode: 500, errorMessage: 'No connection with server' };
             reject(error);
         });
     });
@@ -61,15 +63,15 @@ function checkStatus(response) {
     throw error;
 }
 
-function parseResponse({ errorCode, errorMessage, result } = {}) {
+function parseResponse({ errorCode, errorMessage, result, session_id: session } = {}) {
     if (errorCode !== 0) {
         const error = isNaN(parseInt(errorCode, 10))
-            ? { errorCode: 500, errorMessage: 'Некорректный формат ответа сервера' }
+            ? { errorCode: 500, errorMessage: 'Unknown error code' }
             : { errorCode, errorMessage };
         throw error;
     }
 
-    return result;
+    return { result, session };
 }
 
 export default class ApiUtils {
@@ -84,6 +86,10 @@ export default class ApiUtils {
 
         const { body, headers: requestHeaders } = requestContent;
 
+        console.log('____________________ starting request ____________________');
+        console.log(`endpoint: ${endpoint + url}`);
+        console.log(`body: ${JSON.stringify(body)}`);
+        console.log('__________________________________________________________');
         [error, response] = await timeout(fetch(endpoint + url, {
             method,
             body,
