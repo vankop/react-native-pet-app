@@ -5,6 +5,7 @@ import {
     signInActionCreator,
     signOutAction
 } from '../actions/appState';
+import Logger from '../../utils/logger';
 
 export const createRequestThunk = ({
    actionCreators: [startActionCreator, failureActionCreator, successActionCreator] = []
@@ -30,8 +31,7 @@ export const createRequestThunk = ({
                 //     history.push('/login');
                 // }
 
-                console.log('______________________ request error ______________________');
-                console.log(error);
+                Logger.error('request error\n', error);
 
                 const { errorCode, errorMessage } = error;
 
@@ -44,10 +44,10 @@ export const createRequestThunk = ({
                 .post(apiUri, requestPayload)
                 .then(({ result, session }) => {
                     if (session) {
-                        console.log(`_______________________ sign in by session ________________________`);
+                        Logger.info('sign in by session', session);
                         dispatch(signInActionCreator(session))
                     } else {
-                        console.log(`_______________________ sign out by server ________________________`);
+                        Logger.info('sign out by server', session);
                         dispatch(signOutAction)
                     }
 

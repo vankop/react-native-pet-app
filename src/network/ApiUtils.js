@@ -2,6 +2,7 @@
 
 import extractDeviceSensitiveData from '../security/device';
 import { handle } from '../utils/async';
+import Logger from '../utils/logger';
 
 const endpoint = BACKEND_URL;
 const token = API_TOKEN;
@@ -45,7 +46,7 @@ function timeout(promise) {
                 clearTimeout(timeOutId);
                 resolve(data);
             }).catch((err) => {
-            console.log(err);
+            Logger.error(err);
             clearTimeout(timeOutId);
             const error = { errorCode: 500, errorMessage: 'No connection with server' };
             reject(error);
@@ -77,47 +78,28 @@ export default class ApiUtils {
     static session = null;
 
     static async request(method, url, data, headers = {}) {
-        let requestContent, error, response, responseJson;
+        const requestContent = await setRequestCapacity(ApiUtils.session, headers, data);
 
-        [error, requestContent] = await handle(setRequestCapacity(ApiUtils.session, headers, data));
-
-        console.log('_____________________ request content _________________________');
-        console.log(requestContent);
-
-        if (error) {
-            throw error;
-        }
+        Logger.debug(requestContent);
 
         const { body, headers: requestHeaders } = requestContent;
 
-        console.log('____________________ starting request ____________________');
-        console.log(`endpoint: ${endpoint + url}`);
-        console.log(`body: ${JSON.stringify(body)}`);
-        console.log('__________________________________________________________');
-        [error, response] = await handle(timeout(fetch(endpoint + url, {
+        Logger.debug('request');
+        Logger.debug(`endpoint: ${endpoint + url}`);
+        Logger.debug(`body: ${JSON.stringify(body)}`);
+        const response = await timeout(fetch(endpoint + url, {
             method,
             body: JSON.stringify(body),
             headers: requestHeaders
-        })));
+        }));
 
-        if (error) {
-            console.log(error);
-            throw error;
-        }
-
-        console.log('_____________________ response _________________________');
-        console.log(response);
+        Logger.debug('response');
+        Logger.debug(response);
         checkStatus(response);
 
-        [error, responseJson] = await handle(response.json());
+        const responseJson = await response.json();
 
-        if (error) {
-            console.log(error);
-            throw error;
-        }
-
-        console.log('_____________________ response json _________________________');
-        console.log(responseJson);
+        Logger.debug(responseJson);
 
         return parseResponse(responseJson);
     }

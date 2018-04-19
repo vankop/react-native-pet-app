@@ -1,5 +1,5 @@
 import RNSecureKeyStore from 'react-native-secure-key-store';
-// import { AsyncStorage } from 'react-native';
+import Logger from '../utils/logger';
 
 const loginKey = 'login';
 const passwordKey = 'password';
@@ -10,8 +10,8 @@ export async function getCredentials() {
         RNSecureKeyStore.get(passwordKey)
     ]);
 
-    console.log(`______________ get login ${login} ____________________`);
-    console.log(`______________ get password ${password} ____________________`);
+    Logger.debug('get login', login);
+    Logger.debug('get password', password);
 
     return { login, password };
 }
@@ -22,8 +22,8 @@ export async function setCredentials(login, password) {
         RNSecureKeyStore.set(passwordKey, password || '')
     ]);
 
-    console.log(`______________ set login ${login} ____________________`);
-    console.log(`______________ set password ${password} ____________________`);
+    Logger.debug('set login', login);
+    Logger.debug('set password', password);
 }
 
 export async function removeCredentials() {

@@ -11,10 +11,6 @@ import {signOutThunkCreator} from '../../redux/thunks/signout';
 
 export default class LandingScreen extends Component {
     static navigationOptions = ({ navigation, screenProps: signOut }) => {
-        console.log('_________ nav props ___________________');
-        console.log(signOut);
-        console.log(JSON.stringify(navigation));
-
         return {
             headerLeft: (
                 <Button

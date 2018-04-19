@@ -8,6 +8,7 @@ import styles from '../design/styles';
 import {checkSessionThunk} from '../redux/thunks/session';
 import {navigationPropType} from '../types/navigation';
 import {authorizedAppState, unauthorizedAppState} from '../security/appState';
+import Logger from '../utils/logger';
 
 
 const maxTicks = 5;
@@ -36,7 +37,7 @@ export class LoadingScreen extends Component {
 
     constructor({ checkAppState }) {
         super();
-        console.log('_____________________________________ checking session _____________________________________');
+        Logger.info('checking session');
         checkAppState();
 
         this.state = {
