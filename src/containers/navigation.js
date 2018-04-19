@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { StackNavigator, DrawerNavigator, SwitchNavigator } from 'react-navigation';
+import { StackNavigator, SwitchNavigator } from 'react-navigation';
 
 import LandingScreen from './authorized/LandingScreen';
 import FirstScreen from './authorized/FirstScreen';
@@ -8,7 +8,8 @@ import SecondScreen from './authorized/SecondScreen';
 import ModalScreen from './authorized/ModalScreen';
 import SignInScreen from './notAuthorized/SignInScreen';
 import LoadingScreen from './LoadingScreen';
-import {signOutThunkCreator} from '../redux/thunks/signout';
+import {unauthorizedAppState} from '../security/appState';
+import {signOutThunk} from '../redux/thunks/session';
 
 export const MainStack = StackNavigator({
     Home: { screen: LandingScreen },
@@ -16,24 +17,27 @@ export const MainStack = StackNavigator({
     Second: { screen: SecondScreen }
 });
 
-const App = connect(
-    null,
-    (dispatch, { navigation }) => ({
-        signOut: () => dispatch(signOutThunkCreator(navigation))
-    })
-)(({ signOut }) => <MainStack screenProps={signOut} />);
+class App extends Component {
+    static getDerivedStateFromProps({ appState, navigation }) {
+        if (appState === unauthorizedAppState) {
+            navigation.navigate('Auth');
+        }
+    }
 
-export const AppStack = DrawerNavigator({
-    Main: {
-        screen: MainStack,
-    },
-    MyModal: {
-        screen: ModalScreen,
-    },
-}, {
-    mode: 'modal',
-    headerMode: 'none',
-});
+    render() {
+        const { signOut } = this.props;
+        return <MainStack screenProps={signOut} />;
+    }
+}
+
+const ConnectedApp = connect(
+    state => ({
+        appState: state.appState
+    }),
+    dispatch => ({
+        signOut: () => dispatch(signOutThunk)
+    })
+)(App);
 
 export const AuthStack = StackNavigator({
     Main: {
@@ -44,7 +48,7 @@ export const AuthStack = StackNavigator({
 export const RootStack = SwitchNavigator(
     {
         AuthLoading: LoadingScreen,
-        App,
+        App: ConnectedApp,
         Auth: AuthStack,
     },
     {

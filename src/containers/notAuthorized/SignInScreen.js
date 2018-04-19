@@ -9,6 +9,7 @@ import Input from '../../components/Input';
 import {signInThunkCreator, signInThunkCreatorWithResetingCredentials} from '../../redux/thunks/signin';
 import { navigationPropType } from '../../types/navigation';
 import { authorizedAppState } from '../../security/appState';
+import {appHeaderOptions} from '../../design/misc';
 
 class SignIn extends Component {
     static propTypes = {
@@ -48,7 +49,8 @@ const SignInForm = reduxForm({
 
 export class SignInScreen extends Component {
     static navigationOptions = {
-        title: 'Please sign in'
+        title: 'Please sign in',
+        ...appHeaderOptions
     };
 
     static propTypes = {
