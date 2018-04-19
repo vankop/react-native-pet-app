@@ -8,6 +8,21 @@ import styles from '../../design/styles';
 import {getLoc} from '../../design/localization';
 import Loading from '../../components/Loading';
 
+const displayParams = [
+    'id',
+    'msisdn',
+    'email',
+    'surname',
+    'name',
+    'patronymic',
+    'snils',
+    'birthdate',
+    'msisdnConfirmed',
+    'emailConfirmed',
+    'createTime',
+    'ssoId'
+];
+
 function ProfileScreen({ loading, data }) {
     if (loading || !data) {
         return <Loading />;
@@ -15,12 +30,12 @@ function ProfileScreen({ loading, data }) {
 
     return (
         <ScrollView
-            contentContainerStyle={styles.container}
+            contentContainerStyle={styles.list}
         >
-            {map(data, (value, key) => (
+            {map(displayParams, key => (
                 <View key={key} style={styles.listItem}>
                     <Text style={styles.title}>{getLoc(key, 'profile')}</Text>
-                    <Text>{value}</Text>
+                    <Text>{data[key]}</Text>
                 </View>
             ))}
         </ScrollView>

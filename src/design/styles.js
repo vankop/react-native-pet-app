@@ -17,9 +17,12 @@ export default StyleSheet.create({
     signOutButton: {
         height: 200
     },
-    listItem: {
+    list: {
         flex: 1,
-        alignItems: 'flex-start',
+        alignItems: 'stretch',
+        justifyContent: 'flex-start'
+    },
+    listItem: {
         marginBottom: 10,
         marginLeft: 10,
         borderBottomWidth: 1,

@@ -7,16 +7,18 @@ import {connect} from 'react-redux';
 import {signOutThunk} from '../../redux/thunks/session';
 import {signOutAppState} from '../../security/appState';
 import styles from '../../design/styles';
+import {requestProfile} from '../../redux/stores/profileStore';
 
 class HomeScreen extends Component {
     static propTypes = {
         signOut: PropTypes.func.isRequired,
+        getProfile: PropTypes.func.isRequired,
         signingOut: PropTypes.bool.isRequired
     };
 
-    constructor({ session }) {
+    constructor({ getProfile }) {
         super();
-
+        getProfile();
         this.handleAppStateChange = this.handleAppStateChange.bind(this);
     }
 
@@ -68,5 +70,6 @@ class HomeScreen extends Component {
 export default connect(state => ({
     signingOut: state.appState === signOutAppState
 }), dispatch => ({
-  signOut: () => dispatch(signOutThunk)
+    signOut: () => dispatch(signOutThunk),
+    getProfile: () => dispatch(requestProfile())
 }))(HomeScreen);
