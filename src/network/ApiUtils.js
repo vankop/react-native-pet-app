@@ -26,7 +26,7 @@ async function setRequestCapacity(session, headers, body) {
     };
 
     if (session) {
-        resultBody.session = session;
+        resultBody.auth = { session_id: session };
     }
 
     return {

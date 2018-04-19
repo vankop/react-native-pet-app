@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {inactiveColor} from './colors';
 
 export default StyleSheet.create({
     container: {
@@ -15,5 +16,17 @@ export default StyleSheet.create({
     },
     signOutButton: {
         height: 200
+    },
+    listItem: {
+        flex: 1,
+        alignItems: 'flex-start',
+        marginBottom: 10,
+        marginLeft: 10,
+        borderBottomWidth: 1,
+        borderColor: inactiveColor
+    },
+    title: {
+        fontSize: 19,
+        fontWeight: 'bold'
     }
 });

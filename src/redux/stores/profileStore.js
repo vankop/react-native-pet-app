@@ -1,7 +1,7 @@
 import {createRequestThunk} from '../thunks/createRequestThunk';
 import {createDataStore} from './createDataStore';
 
-const profileStore = createDataStore('profile');
+const profileStore = createDataStore('profile', true);
 
 export default profileStore;
 
