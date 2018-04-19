@@ -3,7 +3,10 @@ import {
     removeCredentials
 } from '../../security/user';
 import {handle} from '../../utils/async';
-import { signOutAction } from '../actions/appState';
+import {
+    signOutAction,
+    signingOutAction
+} from '../actions/appState';
 import {signInThunkCreator} from './signin';
 import Logger from '../../utils/logger';
 
@@ -28,13 +31,12 @@ export async function checkSessionThunk(dispatch) {
 }
 
 export async function signOutThunk(dispatch) {
+    dispatch(signingOutAction);
     const [error] = await handle(removeCredentials());
-
+    dispatch(signOutAction);
     if (error) {
         throw error;
     }
-
-    dispatch(signOutAction);
 
     return true;
 }

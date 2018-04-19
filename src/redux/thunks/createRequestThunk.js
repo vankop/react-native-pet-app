@@ -2,10 +2,10 @@ import { clone } from 'lodash';
 
 import ApiUtils from '../../network/ApiUtils';
 import {
-    signInActionCreator,
-    signOutAction
+    signInActionCreator
 } from '../actions/appState';
 import Logger from '../../utils/logger';
+import {signOutThunk} from './session';
 
 export const createRequestThunk = ({
    actionCreators: [startActionCreator, failureActionCreator, successActionCreator] = []
@@ -48,7 +48,7 @@ export const createRequestThunk = ({
                         dispatch(signInActionCreator(session))
                     } else {
                         Logger.info('sign out by server', session);
-                        dispatch(signOutAction)
+                        dispatch(signOutThunk)
                     }
 
                     return result;

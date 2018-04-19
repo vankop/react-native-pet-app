@@ -1,20 +1,42 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { StackNavigator, SwitchNavigator } from 'react-navigation';
+import {
+    TabNavigator,
+    StackNavigator,
+    SwitchNavigator,
+    TabBarBottom
+} from 'react-navigation';
 
-import LandingScreen from './authorized/LandingScreen';
-import FirstScreen from './authorized/FirstScreen';
-import SecondScreen from './authorized/SecondScreen';
-import ModalScreen from './authorized/ModalScreen';
+import LandingScreen from './authorized/HomeScreen';
+import ProfileScreen from './authorized/ProfileScreen';
 import SignInScreen from './notAuthorized/SignInScreen';
 import LoadingScreen from './LoadingScreen';
 import {unauthorizedAppState} from '../security/appState';
 import {signOutThunk} from '../redux/thunks/session';
+import {inactiveColor, mainColor} from '../design/colors';
 
-export const MainStack = StackNavigator({
-    Home: { screen: LandingScreen },
-    // First: { screen: FirstScreen },
-    Second: { screen: SecondScreen }
+export const MainStack = TabNavigator({
+    Home: {
+        screen: LandingScreen,
+        navigationOptions: {
+            title: 'Home'
+        }
+    },
+    Profile: {
+        screen: ProfileScreen,
+        navigationOptions: ({ navigation }) => ({
+            title: 'Profile'
+        })
+    },
+}, {
+    tabBarOptions: {
+        activeTintColor: mainColor,
+        inactiveTintColor: inactiveColor,
+    },
+    tabBarComponent: TabBarBottom,
+    tabBarPosition: 'bottom',
+    animationEnabled: true,
+    swipeEnabled: true
 });
 
 class App extends Component {
@@ -25,17 +47,13 @@ class App extends Component {
     }
 
     render() {
-        const { signOut } = this.props;
-        return <MainStack screenProps={signOut} />;
+        return <MainStack />;
     }
 }
 
 const ConnectedApp = connect(
     state => ({
         appState: state.appState
-    }),
-    dispatch => ({
-        signOut: () => dispatch(signOutThunk)
     })
 )(App);
 

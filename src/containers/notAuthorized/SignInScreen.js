@@ -21,7 +21,7 @@ class SignIn extends Component {
     render() {
         const { submit, pristine, submitting } = this.props;
         return (
-            <View style={styles.signin}>
+            <View style={styles.signIn}>
                 <Field
                     name="login"
                     component={Input}
@@ -44,7 +44,7 @@ class SignIn extends Component {
 }
 
 const SignInForm = reduxForm({
-    form: 'signin'
+    form: 'signIn'
 })(SignIn);
 
 export class SignInScreen extends Component {

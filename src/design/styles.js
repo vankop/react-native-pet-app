@@ -6,11 +6,14 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    signin: {
+    signIn: {
         flex: 1,
         alignItems: 'stretch',
         justifyContent: 'center',
         paddingRight: 50,
         paddingLeft: 50
+    },
+    signOutButton: {
+        height: 200
     }
 });

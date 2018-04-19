@@ -8,9 +8,11 @@ import thunk from 'redux-thunk';
 
 import appState from './reducers/appState';
 import session from './reducers/session';
+import profileStore from './stores/profileStore';
 
 export default createStore(combineReducers({
     form: reducer,
     appState,
-    session
+    session,
+    profile: profileStore.reducer
 }), applyMiddleware(thunk));
