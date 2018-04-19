@@ -26,7 +26,27 @@ export default StyleSheet.create({
         marginBottom: 10,
         marginLeft: 10,
         borderBottomWidth: 1,
-        borderColor: inactiveColor
+        borderColor: inactiveColor,
+        height: 60
+    },
+    header: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#03A9F4',
+        overflow: 'hidden',
+    },
+    bar: {
+        marginTop: 28,
+        height: 32,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    listTitle: {
+        backgroundColor: 'transparent',
+        color: 'white',
+        fontSize: 18,
     },
     title: {
         fontSize: 19,
