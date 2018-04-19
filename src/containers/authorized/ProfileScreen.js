@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, ScrollView, View, Animated } from 'react-native';
 import {map, times} from 'lodash';
 import {connect} from 'react-redux';
+import Touchable from 'react-native-platform-touchable';
 
 import profileStore from '../../redux/stores/profileStore';
 import styles from '../../design/styles';
@@ -36,10 +37,12 @@ function ProfileScreen({ loading, data }) {
         <View style={styles.fill}>
             <ScrollView style={styles.fill}>
                 {map(displayParams, key => (
-                    <View key={key} style={styles.listItem}>
-                        <Text style={styles.title}>{getLoc(key, 'profile')}</Text>
-                        <Text>{data[key]}</Text>
-                    </View>
+                    <Touchable key={key}>
+                        <View style={styles.listItem}>
+                            <Text style={styles.title}>{getLoc(key, 'profile')}</Text>
+                            <Text>{data[key]}</Text>
+                        </View>
+                    </Touchable>
                 ))}
             </ScrollView>
         </View>

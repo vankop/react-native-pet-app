@@ -26,10 +26,11 @@ export default StyleSheet.create({
         justifyContent: 'flex-start'
     },
     listItem: {
-        padding: 10,
-        borderBottomWidth: 1,
+        margin: 10,
+        paddingLeft: 10,
+        borderBottomWidth: 0.5,
         borderColor: inactiveColor,
-        height: 60
+        height: 50
     },
     header: {
         position: 'absolute',

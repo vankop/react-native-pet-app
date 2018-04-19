@@ -36,7 +36,8 @@ export const MainStack = TabNavigator({
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     animationEnabled: true,
-    swipeEnabled: true
+    swipeEnabled: true,
+    lazy: false
 });
 
 class App extends Component {
