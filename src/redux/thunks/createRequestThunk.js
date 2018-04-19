@@ -21,7 +21,7 @@ export const createRequestThunk = ({
                 dispatch(startActionCreator(extraActionCreatorParameter, getState));
             }
 
-            const errorHandler = ({ errorCode, errorMessage }) => {
+            const errorHandler = (error) => {
                 // if (failureActionCreator) {
                 //     dispatch(failureActionCreator(
                 //         { errorMessage, errorCode },
@@ -35,8 +35,10 @@ export const createRequestThunk = ({
                 // }
 
                 console.log('______________________ request error ______________________');
-                console.log(`msg: ${errorMessage}`);
-                console.log(`code: ${errorCode}`);
+                console.log(error);
+
+                const { errorCode, errorMessage } = error;
+
                 return Promise.reject(errorMessage);
             };
 

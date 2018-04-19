@@ -1,6 +1,6 @@
 {
   "name": "react-native-pet-app",
-  "version": "0.1.0",
+  "version": "2.6.2",
   "private": true,
   "devDependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1",

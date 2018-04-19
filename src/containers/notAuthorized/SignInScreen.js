@@ -7,6 +7,8 @@ import { Field, reduxForm } from 'redux-form';
 import styles from '../../design/styles';
 import Input from '../../components/Input';
 import {signInThunkCreator} from '../../redux/thunks/signin';
+import {navigationPropType} from '../../types/navigation';
+import {authorizedAppState, unauthorizedAppState} from '../../security/appState';
 
 class SignIn extends Component {
     static propTypes = {
@@ -41,17 +43,27 @@ class SignIn extends Component {
 }
 
 const SignInForm = reduxForm({
-    form: 'signin',
+    form: 'signin'
 })(SignIn);
 
 export class SignInScreen extends Component {
     static navigationOptions = {
-        title: 'Please sign in',
+        title: 'Please sign in'
     };
 
     static propTypes = {
-        signIn: PropTypes.func.isRequired
+        signIn: PropTypes.func.isRequired,
+        appState: PropTypes.string.isRequired,
+        navigation: PropTypes.shape(navigationPropType).isRequired
     };
+
+    static getDerivedStateFromProps({ navigation, appState }) {
+        if (appState === authorizedAppState) {
+            navigation.navigate('App');
+        }
+
+        return null;
+    }
 
     render() {
         return <SignInForm onSubmit={this.props.signIn} />;
@@ -59,9 +71,11 @@ export class SignInScreen extends Component {
 }
 
 export default connect(
-    null,
+    state => ({
+        appState: state.appState
+    }),
     dispatch => ({
-        signIn: (login, password) => dispatch(signInThunkCreator({
+        signIn: ({ login, password }) => dispatch(signInThunkCreator({
             auth: {
                 login,
                 password

@@ -11,7 +11,8 @@ const requestSecondsTimeOut = 15;
 async function setRequestCapacity(headers, body) {
     const resultHeaders = {
         ...headers,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
     };
 
     let error, session, detailsInfo;
@@ -46,7 +47,8 @@ function timeout(promise) {
             .then((data) => {
                 clearTimeout(timeOutId);
                 resolve(data);
-            }).catch(() => {
+            }).catch((err) => {
+            console.log(err);
             clearTimeout(timeOutId);
             const error = { errorCode: 500, errorMessage: 'No connection with server' };
             reject(error);
@@ -76,9 +78,12 @@ function parseResponse({ errorCode, errorMessage, result, session_id: session } 
 
 export default class ApiUtils {
     static async request(method, url, data, headers = {}) {
-        let requestContent, error, response;
+        let requestContent, error, response, responseJson;
 
         [error, requestContent] = await handle(setRequestCapacity(headers, data));
+
+        console.log('_____________________ request content _________________________');
+        console.log(requestContent);
 
         if (error) {
             throw error;
@@ -90,19 +95,32 @@ export default class ApiUtils {
         console.log(`endpoint: ${endpoint + url}`);
         console.log(`body: ${JSON.stringify(body)}`);
         console.log('__________________________________________________________');
-        [error, response] = await timeout(fetch(endpoint + url, {
+        [error, response] = await handle(timeout(fetch(endpoint + url, {
             method,
-            body,
+            body: JSON.stringify(body),
             headers: requestHeaders
-        }));
+        })));
 
         if (error) {
+            console.log(error);
             throw error;
         }
 
+        console.log('_____________________ response _________________________');
+        console.log(response);
         checkStatus(response);
 
-        return parseResponse(response);
+        [error, responseJson] = await handle(response.json());
+
+        if (error) {
+            console.log(error);
+            throw error;
+        }
+
+        console.log('_____________________ response json _________________________');
+        console.log(responseJson);
+
+        return parseResponse(responseJson);
     }
 
     static post = (...args) => ApiUtils.request('POST', ...args);
