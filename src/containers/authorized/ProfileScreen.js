@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, ScrollView, View, Animated } from 'react-native';
-import { map } from 'lodash';
+import {map, times} from 'lodash';
 import {connect} from 'react-redux';
 
 import profileStore from '../../redux/stores/profileStore';
@@ -33,23 +33,14 @@ function ProfileScreen({ loading, data }) {
     const screenHeight = Dimensions.get('window').height;
 
     return (
-        <View style={viewStyle}>
-            <Animated.View style={styles.header}>
-                <View style={styles.bar}>
-                    <Text style={styles.listTitle}>Profile</Text>
-                </View>
-            </Animated.View>
-            <ScrollView
-                contentContainerStyle={styles.list}
-            >
-                <View style={{ marginTop: 200 }}>
-                    {map(displayParams, key => (
-                        <View key={key} style={styles.listItem}>
-                            <Text style={styles.title}>{getLoc(key, 'profile')}</Text>
-                            <Text>{data[key]}</Text>
-                        </View>
-                    ))}
-                </View>
+        <View style={styles.fill}>
+            <ScrollView style={styles.fill}>
+                {map(displayParams, key => (
+                    <View key={key} style={styles.listItem}>
+                        <Text style={styles.title}>{getLoc(key, 'profile')}</Text>
+                        <Text>{data[key]}</Text>
+                    </View>
+                ))}
             </ScrollView>
         </View>
     );

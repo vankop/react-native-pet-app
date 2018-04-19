@@ -2,6 +2,9 @@ import {StyleSheet} from 'react-native';
 import {inactiveColor} from './colors';
 
 export default StyleSheet.create({
+    fill: {
+        flex: 1
+    },
     container: {
         flex: 1,
         alignItems: 'center',
@@ -23,8 +26,7 @@ export default StyleSheet.create({
         justifyContent: 'flex-start'
     },
     listItem: {
-        marginBottom: 10,
-        marginLeft: 10,
+        padding: 10,
         borderBottomWidth: 1,
         borderColor: inactiveColor,
         height: 60
@@ -49,7 +51,7 @@ export default StyleSheet.create({
         fontSize: 18,
     },
     title: {
-        fontSize: 19,
+        fontSize: 15,
         fontWeight: 'bold'
     }
 });
