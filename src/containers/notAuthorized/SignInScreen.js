@@ -6,9 +6,9 @@ import { Field, reduxForm } from 'redux-form';
 
 import styles from '../../design/styles';
 import Input from '../../components/Input';
-import {signInThunkCreator} from '../../redux/thunks/signin';
-import {navigationPropType} from '../../types/navigation';
-import {authorizedAppState, unauthorizedAppState} from '../../security/appState';
+import {signInThunkCreator, signInThunkCreatorWithResetingCredentials} from '../../redux/thunks/signin';
+import { navigationPropType } from '../../types/navigation';
+import { authorizedAppState } from '../../security/appState';
 
 class SignIn extends Component {
     static propTypes = {
@@ -75,13 +75,6 @@ export default connect(
         appState: state.appState
     }),
     dispatch => ({
-        signIn: ({ login, password }) => dispatch(signInThunkCreator({
-            auth: {
-                login,
-                password
-            },
-            empAction: 'login'
-        }))
-    })
-)(SignInScreen);
+        signIn: ({login, password}) => dispatch(signInThunkCreatorWithResetingCredentials(login, password))
+}))(SignInScreen);
 

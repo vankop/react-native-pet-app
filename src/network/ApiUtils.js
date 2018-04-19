@@ -1,6 +1,5 @@
 ﻿import { BACKEND_URL, API_TOKEN } from 'react-native-dotenv'
 
-import { getSession } from '../security/session';
 import extractDeviceSensitiveData from '../security/device';
 import { handle } from '../utils/async';
 
@@ -8,16 +7,14 @@ const endpoint = BACKEND_URL;
 const token = API_TOKEN;
 const requestSecondsTimeOut = 15;
 
-async function setRequestCapacity(headers, body) {
+async function setRequestCapacity(session, headers, body) {
     const resultHeaders = {
         ...headers,
         'Content-Type': 'application/json',
         Accept: 'application/json'
     };
 
-    let error, session, detailsInfo;
-
-    [error, session = null] = await handle(getSession());
+    let error, detailsInfo;
 
     [error, detailsInfo = {}] = await handle(extractDeviceSensitiveData());
 
@@ -77,10 +74,12 @@ function parseResponse({ errorCode, errorMessage, result, session_id: session } 
 }
 
 export default class ApiUtils {
+    static session = null;
+
     static async request(method, url, data, headers = {}) {
         let requestContent, error, response, responseJson;
 
-        [error, requestContent] = await handle(setRequestCapacity(headers, data));
+        [error, requestContent] = await handle(setRequestCapacity(ApiUtils.session, headers, data));
 
         console.log('_____________________ request content _________________________');
         console.log(requestContent);

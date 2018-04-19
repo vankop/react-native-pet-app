@@ -1,15 +1,10 @@
 import { clone } from 'lodash';
 
 import ApiUtils from '../../network/ApiUtils';
-import {setSession} from '../../security/session';
-import {signOutAction} from '../actions/appState';
-import {setSessionThunkCreator} from './session';
-
-function signOutThunk(dispatch) {
-    setSession(null);
-
-    dispatch(signOutAction);
-}
+import {
+    signInActionCreator,
+    signOutAction
+} from '../actions/appState';
 
 export const createRequestThunk = ({
    actionCreators: [startActionCreator, failureActionCreator, successActionCreator] = []
@@ -17,6 +12,7 @@ export const createRequestThunk = ({
     function requestThunk(requestPayload) {
         return function request(dispatch, getState) {
             const extraActionCreatorParameter = clone(requestPayload);
+            const session = getState().session;
             if (startActionCreator) {
                 dispatch(startActionCreator(extraActionCreatorParameter, getState));
             }
@@ -42,9 +38,22 @@ export const createRequestThunk = ({
                 return Promise.reject(errorMessage);
             };
 
+            ApiUtils.session = session;
+
             return ApiUtils
                 .post(apiUri, requestPayload)
-                .then(({ result = [], session }) => {
+                .then(({ result, session }) => {
+                    if (session) {
+                        console.log(`_______________________ sign in by session ________________________`);
+                        dispatch(signInActionCreator(session))
+                    } else {
+                        console.log(`_______________________ sign out by server ________________________`);
+                        dispatch(signOutAction)
+                    }
+
+                    return result;
+                })
+                .then((result = []) => {
                     if (successActionCreator) {
                         dispatch(successActionCreator(
                             result,
@@ -52,11 +61,6 @@ export const createRequestThunk = ({
                             getState
                         ));
                     }
-
-                    if (session) {
-                        dispatch(setSessionThunkCreator(session));
-                    }
-
 
                     return result;
                 }).catch(errorHandler);

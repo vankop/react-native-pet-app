@@ -5,12 +5,15 @@ import {
 
 export const appStateActionType = 'APP_STATE';
 
-export const signOutAction = {
+export const signInActionCreator = session => ({
     type: appStateActionType,
-    payload: authorizedAppState
-};
+    payload: authorizedAppState,
+    meta: {
+        session
+    }
+});
 
-export const signInAction = {
+export const signOutAction = {
     type: appStateActionType,
     payload: unauthorizedAppState
 };

@@ -1,34 +1,39 @@
-import {getSession, setSession} from '../../security/session';
+import {
+    getCredentials,
+    removeCredentials
+} from '../../security/user';
 import {handle} from '../../utils/async';
-import {signInAction, signOutAction} from '../actions/appState';
+import { signOutAction } from '../actions/appState';
+import {signInThunkCreator} from './signin';
 
 export async function checkSessionThunk(dispatch) {
-    let [error, session] = await handle(getSession());
+    console.log('___________________ gettingCredentials ___________________');
+    const [error, credentials] = await handle(getCredentials());
 
-    if (!error && session) {
-        console.log('___________________ sign in ___________________');
-        dispatch(signInAction);
+    console.log(error);
+    console.log(credentials);
+
+    if (!error &&
+        credentials &&
+        credentials.login &&
+        credentials.password) {
+        const { login, password } = credentials;
+        console.log('___________________ trying sign in ___________________');
+        dispatch(signInThunkCreator(login, password));
     } else {
         console.log('___________________ sign out ___________________');
         dispatch(signOutAction);
     }
-
-    return session;
 }
 
-export function setSessionThunkCreator(session) {
-    return async function setSessionThunk(dispatch) {
-        console.log(`setting session to : ${session}`);
+export async function signOutThunk(dispatch) {
+    const [error] = await handle(removeCredentials());
 
-        const [error] = await handle(setSession(session || ''));
-
-        if (error) {
-            throw error;
-        }
-
-        console.log('___________________ sign in ___________________');
-        dispatch(signInAction);
-
-        return true;
+    if (error) {
+        throw error;
     }
+
+    dispatch(signOutAction);
+
+    return true;
 }

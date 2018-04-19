@@ -1,9 +1,8 @@
-import {setSessionThunkCreator} from './session';
+import { signOutThunk } from './session';
 
-export const signOutThunkCreator = (navigation) => async function signOutThunk(dispatch) {
-    console.log('___________________ sign out ____________________');
+export const signOutThunkCreator = (navigation) => async function (dispatch) {
 
-    await dispatch(setSessionThunkCreator(null));
+    await dispatch(signOutThunk);
 
     navigation.navigate('Auth');
 };
