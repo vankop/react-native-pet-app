@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import Touchable from 'react-native-platform-touchable';
-import {Button, Text, View, AppState, Platform} from 'react-native';
-import {appHeaderOptions, hitSlop} from '../../design/misc';
+import { Button, Text, View } from 'react-native';
+
 import {connect} from 'react-redux';
 import {signOutThunk} from '../../redux/thunks/session';
 import {signOutAppState} from '../../security/appState';
@@ -19,30 +18,6 @@ class HomeScreen extends Component {
     constructor({ getProfile }) {
         super();
         getProfile();
-        this.handleAppStateChange = this.handleAppStateChange.bind(this);
-    }
-
-    handleAppStateChange(appState) {
-        if (appState === 'background') {
-            // let date = new Date(Date.now() + (10 * 1000));
-            //
-            // if (Platform.OS === 'ios') {
-            //     date = date.toISOString();
-            // }
-            //
-            // PushNotification.localNotificationSchedule({
-            //     message: "My Notification Message",
-            //     date,
-            // });
-        }
-    }
-
-    componentDidMount() {
-        AppState.addEventListener('change', this.handleAppStateChange);
-    }
-
-    componentWillUnmount() {
-        AppState.removeEventListener('change', this.handleAppStateChange);
     }
 
     render() {

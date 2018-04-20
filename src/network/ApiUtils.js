@@ -1,6 +1,6 @@
 ﻿import { BACKEND_URL, API_TOKEN } from 'react-native-dotenv'
 
-import extractDeviceSensitiveData from '../security/device';
+import Device from '../security/device';
 import { handle } from '../utils/async';
 import Logger from '../utils/logger';
 
@@ -15,14 +15,14 @@ async function setRequestCapacity(session, headers, body) {
         Accept: 'application/json'
     };
 
-    let error, detailsInfo;
+    let error, deviceInfo;
 
-    [error, detailsInfo = {}] = await handle(extractDeviceSensitiveData());
+    [error, deviceInfo = {}] = await handle(Device.extractDeviceSensitiveData());
 
     const resultBody = {
         ...body,
         token,
-        detailsInfo
+        device_info: deviceInfo
     };
 
     if (session) {
