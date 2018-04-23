@@ -29,6 +29,7 @@
     "react-native-platform-touchable": "^1.1.1",
     "react-native-push-notification": "^3.0.2",
     "react-native-secure-key-store": "^1.0.9",
+    "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^1.5.11",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",

@@ -4,7 +4,8 @@ import {
     TabNavigator,
     StackNavigator,
     SwitchNavigator,
-    TabBarBottom
+    TabBarBottom,
+    DrawerNavigator
 } from 'react-navigation';
 
 import LandingScreen from './authorized/HomeScreen';
@@ -12,10 +13,9 @@ import ProfileScreen from './authorized/ProfileScreen';
 import SignInScreen from './notAuthorized/SignInScreen';
 import LoadingScreen from './LoadingScreen';
 import {unauthorizedAppState} from '../security/appState';
-import {signOutThunk} from '../redux/thunks/session';
 import {inactiveColor, mainColor} from '../design/colors';
 
-export const MainStack = TabNavigator({
+const MainStack = TabNavigator({
     Home: {
         screen: LandingScreen,
         navigationOptions: {
@@ -38,6 +38,15 @@ export const MainStack = TabNavigator({
     animationEnabled: true,
     swipeEnabled: true,
     lazy: false
+});
+
+const AppStack = DrawerNavigator({
+    Home: {
+        screen: LandingScreen,
+        navigationOptions: {
+            title: 'Стартовая'
+        }
+    }
 });
 
 class App extends Component {
