@@ -34,12 +34,6 @@ const labelContainerStyle = {
     alignItems: 'center'
 };
 
-const dividerStyle = {
-    height: 0.5,
-    backgroundColor: inactiveColor,
-    margin: 10
-};
-
 const bottomGroupContainerStyle = {
     flex: 1,
     justifyContent: 'flex-end'
@@ -58,7 +52,7 @@ function SideMenu({ signingOut, signOut, ...rest }) {
                 <DrawerItems {...rest} />
             </ScrollView>
             <ScrollView style={styles.fill} contentContainerStyle={bottomGroupContainerStyle}>
-                <View style={dividerStyle} />
+                <View style={[styles.dividerView, { margin: 10 }]} />
                 <DrawerItems
                     {...rest}
                     items={extraMenuItems}
