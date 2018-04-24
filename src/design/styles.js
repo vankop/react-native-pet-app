@@ -65,7 +65,7 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         zIndex: 50,
-        margin: 10,
+        marginBottom: 10,
         paddingLeft: 10,
         paddingRight: 10,
         elevation: 2, // SHADOW ONLY FOR ANDROID,
@@ -73,6 +73,7 @@ export default StyleSheet.create({
     },
     panelContainer: {
         backgroundColor: inactiveColor,
+        padding: 10,
         zIndex: 1
     },
     panelHeader: {

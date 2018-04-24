@@ -36,7 +36,7 @@ export default class Loading extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, this.props.style]}>
                 <Text>{getText(this.state.tick)}</Text>
             </View>
         );

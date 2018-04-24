@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Text, View} from 'react-native';
-import Touchable from 'react-native-platform-touchable';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
 import styles from '../design/styles';
@@ -16,7 +15,7 @@ export default function Panel({
     suffixStyle,
     contentStyle,
     suffix,
-    onStateChange,
+    headerTouch,
     title
 }) {
     if (mode === 'none') {
@@ -42,29 +41,29 @@ export default function Panel({
         );
     }
 
+    const header = (
+        <View style={styles.panelHeader}>
+            <Text style={styles.panelTitle}>{title}</Text>
+            {
+                suffix
+                    ? (
+                        <View style={[styles.fill, styles.raw, suffixStyle]}>
+                            {suffix}
+                        </View>
+                    )
+                    : null
+            }
+            <Icon
+                name={visible ? 'expand-less' : 'expand-more'}
+                color={mainColor}
+                size={icons.size.medium}
+            />
+        </View>
+    );
+
     return (
         <View style={[styles.panel, visible ? null : { maxHeight: 50 }]}>
-            <View style={styles.panelHeader}>
-                <Text style={styles.panelTitle}>{title}</Text>
-                {
-                    suffix
-                        ? (
-                            <View style={[styles.fill, styles.raw, suffixStyle]}>
-                                {suffix}
-                            </View>
-                        )
-                        : null
-                }
-                <Touchable
-                    onPress={onStateChange}
-                >
-                    <Icon
-                        name={visible ? 'expand-less' : 'expand-more'}
-                        color={mainColor}
-                        size={icons.size.medium}
-                    />
-                </Touchable>
-            </View>
+            {headerTouch(header)}
             {
                 visible
                     ? (

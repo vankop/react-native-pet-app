@@ -43,7 +43,7 @@ const requestMessages = createRequestThunk({
 } , '/');
 
 export function fetchMessagesThunk(dispatch, getState) {
-    const messages = messagesStore.selector.data(getState()) || [];
+    const messages = messagesStore.selectors.data(getState()) || [];
 
     return dispatch(requestMessages({
         data: {

@@ -19,6 +19,7 @@ import SideMenu from './SideMenu';
 import MenuButton from '../components/MenuButton';
 import HeaderLeft from '../components/HeaderLeft';
 import styles from '../design/styles';
+import MessagesScreen from './authorized/MessagesScreen';
 
 const MainStack = StackNavigator({
     Home: {
@@ -54,6 +55,24 @@ const ProfileStack = StackNavigator({
     }
 });
 
+const MessageStack = StackNavigator({
+    List: {
+        screen: MessagesScreen,
+        navigationOptions: ({ navigation }) => ({
+            title: 'Сообщения',
+            headerLeft: (
+                <HeaderLeft>
+                    <MenuButton navigation={navigation} />
+                </HeaderLeft>
+            ),
+            headerTitleStyle: styles.headerStyle,
+            headerStyle: styles.fill
+        })
+    }
+}, {
+    initialRouteName: 'List'
+});
+
 const AppStack = DrawerNavigator({
     Home: {
         screen: MainStack,
@@ -68,6 +87,13 @@ const AppStack = DrawerNavigator({
             title: 'Профиль',
             drawerIcon: <Icon name="person" color={mainColor} size={icons.size.small} />
         }
+    },
+    Messages: {
+        screen: MessageStack,
+        navigationOptions: {
+            title: 'Сообщения',
+            drawerIcon: <Icon name="drafts" color={mainColor} size={icons.size.small} />
+        }
     }
 }, {
     initialRouteName: 'Home',
@@ -79,6 +105,8 @@ class App extends Component {
         if (appState === unauthorizedAppState) {
             navigation.navigate('Auth');
         }
+
+        return null;
     }
 
     render() {
