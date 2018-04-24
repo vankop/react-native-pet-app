@@ -62,9 +62,12 @@ export default StyleSheet.create({
         backgroundColor: inactiveColor
     },
     panel: {
+        flex: 1,
+        justifyContent: 'flex-start',
         zIndex: 50,
         margin: 10,
-        padding: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
         elevation: 2, // SHADOW ONLY FOR ANDROID,
         backgroundColor: Platform.OS === 'ios' ? '#F7F7F7' : '#FFF'
     },
@@ -73,13 +76,19 @@ export default StyleSheet.create({
         zIndex: 1
     },
     panelHeader: {
-        height: 50,
+        height: 40,
+        paddingTop: 10,
         flexDirection: 'row',
         justifyContent: 'flex-end'
     },
     panelTitle: {
+        flex: 1,
         fontSize: 15,
         fontWeight: 'bold',
         textAlign: 'left'
+    },
+    panelContent: {
+        paddingTop: 10,
+        paddingBottom: 10
     }
 });

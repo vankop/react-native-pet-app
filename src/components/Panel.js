@@ -1,0 +1,102 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Text, View} from 'react-native';
+import Touchable from 'react-native-platform-touchable';
+import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+
+import styles from '../design/styles';
+import {mainColor} from '../design/colors';
+import icons from '../design/icons';
+
+export default function Panel({
+    mode,
+    visible,
+    children,
+    style,
+    suffixStyle,
+    contentStyle,
+    suffix,
+    onStateChange,
+    title
+}) {
+    if (mode === 'none') {
+        return (
+            <View style={styles.panel}>
+                <View style={styles.panelHeader}>
+                    <Text style={[styles.fill, styles.panelTitle]}>{title}</Text>
+                    {
+                        suffix
+                            ? (
+                                <View style={[styles.fill, styles.raw, suffixStyle]}>
+                                    {suffix}
+                                </View>
+                            )
+                            : null
+                    }
+                </View>
+                <View style={styles.dividerView} />
+                <View style={[styles.fill, styles.panelContent, contentStyle]}>
+                    {children}
+                </View>
+            </View>
+        );
+    }
+
+    return (
+        <View style={[styles.panel, visible ? null : { maxHeight: 50 }]}>
+            <View style={styles.panelHeader}>
+                <Text style={styles.panelTitle}>{title}</Text>
+                {
+                    suffix
+                        ? (
+                            <View style={[styles.fill, styles.raw, suffixStyle]}>
+                                {suffix}
+                            </View>
+                        )
+                        : null
+                }
+                <Touchable
+                    onPress={onStateChange}
+                >
+                    <Icon
+                        name={visible ? 'expand-less' : 'expand-more'}
+                        color={mainColor}
+                        size={icons.size.medium}
+                    />
+                </Touchable>
+            </View>
+            {
+                visible
+                    ? (
+                        [
+                            <View key={0} style={styles.dividerView} />,
+                            <View key={1} style={[styles.fill, styles.panelContent, contentStyle]}>
+                                {children}
+                            </View>
+                        ]
+                    )
+                    : null
+            }
+        </View>
+    );
+}
+
+Panel.propTypes = {
+    mode: PropTypes.oneOf([
+        'none',
+        'spoiler'
+    ]),
+    visible: PropTypes.bool,
+    children: PropTypes.node,
+    style: PropTypes.object,
+    suffix: PropTypes.node,
+    title: PropTypes.string.isRequired,
+    contentStyle: PropTypes.object,
+    suffixStyle: PropTypes.object,
+    onStateChange: PropTypes.func
+};
+
+Panel.defaultProps = {
+    mode: 'none',
+    visible: false
+};
