@@ -1,4 +1,4 @@
-import { AppRegistry } from 'react-native';
+import { AppRegistry, UIManager } from 'react-native';
 import { SENDER_ID } from 'react-native-dotenv'
 import { PushNotificationIOS, Platform } from 'react-native';
 import PushNotification from 'react-native-push-notification';
@@ -6,6 +6,8 @@ import PushNotification from 'react-native-push-notification';
 import App from './App';
 import Logger from './src/utils/logger';
 import Device from './src/security/device';
+
+UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 AppRegistry.registerComponent('reactnativepetapp', () => App);
 

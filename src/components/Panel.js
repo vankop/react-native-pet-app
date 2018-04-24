@@ -21,7 +21,7 @@ export default function Panel({
     if (mode === 'none') {
         return (
             <View style={styles.panel}>
-                <View style={styles.panelHeader}>
+                <View style={[styles.panelHeader, styles.block]}>
                     <Text style={[styles.fill, styles.panelTitle]}>{title}</Text>
                     {
                         suffix
@@ -33,8 +33,8 @@ export default function Panel({
                             : null
                     }
                 </View>
-                <View style={styles.dividerView} />
-                <View style={[styles.fill, styles.panelContent, contentStyle]}>
+                <View style={[styles.dividerView, styles.block]} />
+                <View style={[styles.fill, styles.panelContent, styles.block, contentStyle]}>
                     {children}
                 </View>
             </View>
@@ -42,7 +42,7 @@ export default function Panel({
     }
 
     const header = (
-        <View style={styles.panelHeader}>
+        <View style={[styles.panelHeader, styles.block]}>
             <Text style={styles.panelTitle}>{title}</Text>
             {
                 suffix
@@ -68,8 +68,8 @@ export default function Panel({
                 visible
                     ? (
                         [
-                            <View key={0} style={styles.dividerView} />,
-                            <View key={1} style={[styles.fill, styles.panelContent, contentStyle]}>
+                            <View key={0} style={[styles.dividerView, styles.block]} />,
+                            <View key={1} style={[styles.fill, styles.panelContent, styles.block, contentStyle]}>
                                 {children}
                             </View>
                         ]

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Text, View, FlatList} from 'react-native';
+import {Text, View, FlatList, LayoutAnimation} from 'react-native';
 import {connect} from 'react-redux';
 
 import styles from '../../design/styles';
@@ -50,6 +50,8 @@ class MessagesScreen extends Component {
     }
 
     _onPressItem(id) {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+
         this.setState((state) => {
             const selected = new Map(state.selected);
             selected.set(id, !selected.get(id));
