@@ -5,7 +5,7 @@ import {
     signInActionCreator
 } from '../actions/appState';
 import Logger from '../../utils/logger';
-import {signOutThunk} from './session';
+import signout from './signout';
 
 export const createRequestThunk = ({
    actionCreators: [startActionCreator, failureActionCreator, successActionCreator] = []
@@ -48,7 +48,7 @@ export const createRequestThunk = ({
                         dispatch(signInActionCreator(session))
                     } else {
                         Logger.info('sign out by server', session);
-                        dispatch(signOutThunk)
+                        dispatch(signout)
                     }
 
                     return result;
