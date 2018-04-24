@@ -34,6 +34,7 @@
     "react-navigation": "^1.5.11",
     "react-redux": "^5.0.7",
     "redux": "^3.7.2",
+    "redux-batched-actions": "^0.2.1",
     "redux-form": "^7.3.0",
     "redux-thunk": "^2.2.0"
   }

@@ -1,7 +1,9 @@
 import { concat } from 'lodash';
+import {batchActions} from 'redux-batched-actions';
 
 import {createRequestThunk} from '../thunks/createRequestThunk';
 import {createDataStore} from './createDataStore';
+import {messageCountReached} from './canFetchMore';
 
 export const messagesStore = createDataStore('messages');
 
@@ -18,16 +20,24 @@ const requestMessages = createRequestThunk({
         loadingActionCreator,
         errorActionCreator,
         (messages = [], { data: { offset } }, getState) => {
+            const actions = [];
+
             if (offset === 0) {
                 return successActionCreator(messages);
             }
 
+            if (messages.length < LIMIT) {
+                actions.push(messageCountReached.actionCreator(false));
+            }
+
             const currentArray = messagesStore.selectors.data(getState()) || [];
 
-            return successActionCreator(concat(
+            actions.push(successActionCreator(concat(
                 currentArray,
                 messages
-            ));
+            )));
+
+            return batchActions(actions);
         }
     ]
 } , '/');
