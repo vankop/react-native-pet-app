@@ -32,13 +32,10 @@ export default StyleSheet.create({
         borderColor: inactiveColor,
         height: 50
     },
-    header: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        backgroundColor: '#03A9F4',
-        overflow: 'hidden',
+    headerStyle: {
+        flex: 1,
+        paddingLeft: 10,
+        paddingRight: 10
     },
     bar: {
         marginTop: 28,

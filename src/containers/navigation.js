@@ -1,59 +1,69 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {
-    TabNavigator,
     StackNavigator,
     SwitchNavigator,
-    TabBarBottom,
     DrawerNavigator
 } from 'react-navigation';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import Touchable from 'react-native-platform-touchable';
 
 import LandingScreen from './authorized/HomeScreen';
 import ProfileScreen from './authorized/ProfileScreen';
 import SignInScreen from './notAuthorized/SignInScreen';
 import LoadingScreen from './LoadingScreen';
 import {unauthorizedAppState} from '../security/appState';
-import {inactiveColor, mainColor} from '../design/colors';
+import {mainColor} from '../design/colors';
 import icons from '../design/icons';
 import SideMenu from './SideMenu';
+import MenuButton from '../components/MenuButton';
+import HeaderLeft from '../components/HeaderLeft';
+import styles from '../design/styles';
 
-
-const MainStack = TabNavigator({
+const MainStack = StackNavigator({
     Home: {
         screen: LandingScreen,
-        navigationOptions: {
-            title: 'Home'
-        }
-    },
+        navigationOptions: ({navigation}) => ({
+            title: 'Домашняя',
+            headerLeft: (
+                <HeaderLeft>
+                    <MenuButton navigation={navigation} />
+                </HeaderLeft>
+            ),
+            headerTitleStyle: styles.headerStyle,
+            headerStyle: styles.fill
+        })
+    }
+}, {
+
+});
+
+const ProfileStack = StackNavigator({
     Profile: {
         screen: ProfileScreen,
         navigationOptions: ({ navigation }) => ({
-            title: 'Profile'
+            title: 'Профиль',
+            headerLeft: (
+                <HeaderLeft>
+                    <MenuButton navigation={navigation} />
+                </HeaderLeft>
+            ),
+            headerTitleStyle: styles.headerStyle,
+            headerStyle: styles.fill
         })
-    },
-}, {
-    tabBarOptions: {
-        activeTintColor: mainColor,
-        inactiveTintColor: inactiveColor,
-    },
-    tabBarComponent: TabBarBottom,
-    tabBarPosition: 'bottom',
-    animationEnabled: true,
-    swipeEnabled: true,
-    lazy: false
+    }
 });
 
 const AppStack = DrawerNavigator({
     Home: {
-        screen: LandingScreen,
+        screen: MainStack,
         navigationOptions: {
             title: 'Стартовая',
             drawerIcon: <Icon name="home" color={mainColor} size={icons.size.small} />
         }
     },
     Profile: {
-        screen: ProfileScreen,
+        screen: ProfileStack,
         navigationOptions: {
             title: 'Профиль',
             drawerIcon: <Icon name="person" color={mainColor} size={icons.size.small} />
