@@ -1,6 +1,7 @@
 package com.reactnativepetapp;
 
 import android.app.Application;
+import android.preference.PreferenceManager;
 
 import com.facebook.react.ReactApplication;
 import com.reactlibrary.securekeystore.RNSecureKeyStorePackage;
@@ -47,5 +48,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    PreferenceManager.setDefaultValues(this, R.xml.preference, false);
   }
 }
