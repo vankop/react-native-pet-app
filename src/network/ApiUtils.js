@@ -93,14 +93,11 @@ export default class ApiUtils {
             headers: requestHeaders
         }));
 
-        Logger.debug('response: ');
-        Logger.debug(response);
         checkStatus(response);
 
         const responseJson = await response.json();
 
-        Logger.debug('responseJson: ');
-        Logger.debug(responseJson);
+        Logger.debug('responseJson:', responseJson);
 
         return parseResponse(responseJson);
     }
