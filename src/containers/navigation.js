@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Linking } from 'react-native';
 import {connect} from 'react-redux';
 import {
     StackNavigator,
@@ -7,7 +6,6 @@ import {
     DrawerNavigator
 } from 'react-navigation';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import Touchable from 'react-native-platform-touchable';
 
 import LandingScreen from './authorized/HomeScreen';
 import ProfileScreen from './authorized/ProfileScreen';
@@ -21,7 +19,6 @@ import MenuButton from '../components/MenuButton';
 import HeaderLeft from '../components/HeaderLeft';
 import styles from '../design/styles';
 import MessagesScreen from './authorized/MessagesScreen';
-import Logger from '../utils/logger';
 
 const MainStack = StackNavigator({
     Home: {
@@ -32,15 +29,6 @@ const MainStack = StackNavigator({
                 <HeaderLeft>
                     <MenuButton navigation={navigation} />
                 </HeaderLeft>
-            ),
-            headerRight: (
-                <Touchable onPress={() => Linking.openURL('petapp://settings/').catch(Logger.error)}>
-                    <Icon
-                        name="settings"
-                        size={icons.size.medium}
-                        color={mainColor}
-                    />
-                </Touchable>
             ),
             headerTitleStyle: styles.headerStyle,
             headerStyle: styles.fill
