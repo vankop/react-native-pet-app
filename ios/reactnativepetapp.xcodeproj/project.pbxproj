@@ -37,6 +37,8 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		3715611DBF704729A3466D4C /* libRNSecureKeyStore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DA716410544C3A85B70F54 /* libRNSecureKeyStore.a */; };
+		D7CC5BF649D74203BC437394 /* libRNPreferenceManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50967AA1C25D4E39AEBA8A21 /* libRNPreferenceManager.a */; };
+		20A623F18BC3465BBB8CABAC /* RNPreferenceManagerTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = 6E7295651E96430694EEFA62 /* RNPreferenceManagerTests.xctest */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -288,6 +290,9 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B949D9A536904958B9487B84 /* RNSecureKeyStore.xcodeproj */ = {isa = PBXFileReference; name = "RNSecureKeyStore.xcodeproj"; path = "../node_modules/react-native-secure-key-store/ios/RNSecureKeyStore.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		22DA716410544C3A85B70F54 /* libRNSecureKeyStore.a */ = {isa = PBXFileReference; name = "libRNSecureKeyStore.a"; path = "libRNSecureKeyStore.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		74C3179899EB4987960792F7 /* RNPreferenceManager.xcodeproj */ = {isa = PBXFileReference; name = "RNPreferenceManager.xcodeproj"; path = "../node_modules/react-native-preference/ios/RNPreferenceManager.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		50967AA1C25D4E39AEBA8A21 /* libRNPreferenceManager.a */ = {isa = PBXFileReference; name = "libRNPreferenceManager.a"; path = "libRNPreferenceManager.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		6E7295651E96430694EEFA62 /* RNPreferenceManagerTests.xctest */ = {isa = PBXFileReference; name = "RNPreferenceManagerTests.xctest"; path = "RNPreferenceManagerTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,6 +322,8 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				3715611DBF704729A3466D4C /* libRNSecureKeyStore.a in Frameworks */,
+				D7CC5BF649D74203BC437394 /* libRNPreferenceManager.a in Frameworks */,
+				20A623F18BC3465BBB8CABAC /* RNPreferenceManagerTests.xctest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +502,7 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				B949D9A536904958B9487B84 /* RNSecureKeyStore.xcodeproj */,
+				74C3179899EB4987960792F7 /* RNPreferenceManager.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1066,10 +1074,13 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-secure-key-store\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-preference\ios",
 				);
 			};
 			name = Debug;
@@ -1091,10 +1102,13 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-secure-key-store\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-preference\ios",
 				);
 			};
 			name = Release;
@@ -1117,6 +1131,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-secure-key-store\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-preference\ios",
 				);
 			};
 			name = Debug;
@@ -1138,6 +1153,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-secure-key-store\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-preference\ios",
 				);
 			};
 			name = Release;
@@ -1168,10 +1184,13 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-secure-key-store\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-preference\ios",
 				);
 			};
 			name = Debug;
@@ -1202,10 +1221,13 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-secure-key-store\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-preference\ios",
 				);
 			};
 			name = Release;
@@ -1231,6 +1253,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1255,6 +1279,8 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};

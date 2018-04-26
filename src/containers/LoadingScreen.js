@@ -8,6 +8,7 @@ import {navigationPropType} from '../types/navigation';
 import {authorizedAppState, unauthorizedAppState} from '../security/appState';
 import Logger from '../utils/logger';
 import Loading from '../components/Loading';
+import settings from '../settings/index';
 
 export class LoadingScreen extends Component {
     static propTypes = {
@@ -29,7 +30,14 @@ export class LoadingScreen extends Component {
     constructor({ checkAppState }) {
         super();
         Logger.info('checking session');
-        checkAppState();
+
+        this.state = {
+            error: false
+        };
+
+        settings
+            .then(checkAppState)
+            .catch(() => this.setState({ error: true }));
     }
 
     render() {

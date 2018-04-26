@@ -1,11 +1,15 @@
-﻿import { BACKEND_URL, API_TOKEN } from 'react-native-dotenv'
-
-import Device from '../security/device';
+﻿import Device from '../security/device';
 import { handle } from '../utils/async';
 import Logger from '../utils/logger';
+import settings from '../settings/index';
 
-const endpoint = BACKEND_URL;
-const token = API_TOKEN;
+let endpoint, token;
+
+settings.then(({ backendEndpoint,  empToken }) => {
+    endpoint = backendEndpoint;
+    token = empToken;
+});
+
 const requestSecondsTimeOut = 15;
 
 async function setRequestCapacity(session, headers, body) {
@@ -18,6 +22,10 @@ async function setRequestCapacity(session, headers, body) {
     let error, deviceInfo;
 
     [error, deviceInfo = {}] = await handle(Device.extractDeviceSensitiveData());
+
+    if (!token) {
+        throw { errorCode: 500, errorMessage: 'token not found' };
+    }
 
     const resultBody = {
         ...body,
@@ -83,6 +91,10 @@ export default class ApiUtils {
         Logger.debug(requestContent);
 
         const { body, headers: requestHeaders } = requestContent;
+
+        if (!endpoint) {
+            throw { errorCode: 500, errorMessage: 'endpoint not exists' };
+        }
 
         Logger.debug('request');
         Logger.debug(`endpoint: ${endpoint + url}`);
