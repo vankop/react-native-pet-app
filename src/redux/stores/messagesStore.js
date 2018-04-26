@@ -4,6 +4,7 @@ import {batchActions} from 'redux-batched-actions';
 import {createRequestThunk} from '../thunks/createRequestThunk';
 import {createDataStore} from './createDataStore';
 import {messageCountReached} from './canFetchMore';
+import Logger from '../../utils/logger';
 
 export const messagesStore = createDataStore('messages');
 
@@ -19,37 +20,65 @@ const requestMessages = createRequestThunk({
     actionCreators: [
         loadingActionCreator,
         errorActionCreator,
-        (messages = [], { data: { offset } }, getState) => {
+        (messages = [], { offset }, getState) => {
             const actions = [];
 
-            if (offset === 0) {
-                return successActionCreator(messages);
-            }
+            Logger.debug('MESSAGES', messages);
 
             if (messages.length < LIMIT) {
-                actions.push(messageCountReached.actionCreator(false));
+                actions.push(messageCountReached.actionCreator({ canFetchMore: false }));
             }
 
-            const currentArray = messagesStore.selectors.data(getState()) || [];
+            if (offset === 0) {
+                actions.push(successActionCreator(messages));
+            } else {
+                const currentArray = messagesStore.selectors.data(getState()) || [];
+                if (messages.length !== 0) {
+                    const action = successActionCreator(currentArray.concat(messages));
+                    Logger.debug('action', action);
+                    actions.push(action);
+                } else {
+                    actions.push(successActionCreator(currentArray));
+                }
+            }
 
-            actions.push(successActionCreator(concat(
-                currentArray,
-                messages
-            )));
-
+            Logger.debug('actions', actions);
             return batchActions(actions);
         }
     ]
 } , '/');
 
+const deleteMessage = createRequestThunk({
+    actionCreators: [
+        null,
+        null,
+        (response, request, getState) => {
+            const messages = messagesStore.selectors.data(getState()) || [];
+
+            return requestMessages({
+                offset: 0,
+                limit: messages.length,
+                empAction: 'UNC_LIST'
+            });
+        }
+    ]
+}, '/');
+
 export function fetchMessagesThunk(dispatch, getState) {
     const messages = messagesStore.selectors.data(getState()) || [];
 
     return dispatch(requestMessages({
-        data: {
-            offset: messages.length,
-            limit: LIMIT
-        },
+        offset: messages.length,
+        limit: LIMIT,
         empAction: 'UNC_LIST'
     }));
+}
+
+export function createDeleteMessageThunk(id) {
+    return function deleteMessageThunk(dispatch) {
+        return dispatch(deleteMessage({
+            message_id: id,
+            empAction: 'UNC_DELETE'
+        }));
+    };
 }

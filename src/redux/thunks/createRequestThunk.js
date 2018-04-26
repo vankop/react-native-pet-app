@@ -19,19 +19,15 @@ export const createRequestThunk = ({
             }
 
             const errorHandler = (error) => {
-                // if (failureActionCreator) {
-                //     dispatch(failureActionCreator(
-                //         { errorMessage, errorCode },
-                //         extraActionCreatorParameter,
-                //         getState
-                //     ));
-                // }
+                if (failureActionCreator) {
+                    dispatch(failureActionCreator(
+                        { errorMessage, errorCode },
+                        extraActionCreatorParameter,
+                        getState
+                    ));
+                }
 
-                // if (errorCode === 401) {
-                //     history.push('/login');
-                // }
-
-                Logger.error('request error\n', error);
+                Logger.error('request error', error);
 
                 const { errorCode, errorMessage } = error;
 

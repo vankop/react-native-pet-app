@@ -26,7 +26,7 @@ export default function Panel({
                     {
                         suffix
                             ? (
-                                <View style={[styles.fill, styles.raw, suffixStyle]}>
+                                <View style={[styles.fill, styles.raw, { justifyContent: 'flex-end' }, suffixStyle]}>
                                     {suffix}
                                 </View>
                             )
@@ -47,7 +47,7 @@ export default function Panel({
             {
                 suffix
                     ? (
-                        <View style={[styles.fill, styles.raw, suffixStyle]}>
+                        <View style={[styles.fill, styles.raw, { justifyContent: 'flex-end' }, suffixStyle]}>
                             {suffix}
                         </View>
                     )
