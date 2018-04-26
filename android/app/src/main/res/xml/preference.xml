@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <EditTextPreference
-        android:defaultValue="some"
-        android:key="some"
-        android:selectAllOnFocus="true"
+    <PreferenceCategory
+        android:key="push"
+        android:title="Push нотификации"
+    >
+        <EditTextPreference
+            android:defaultValue="434944116762"
+            android:key="sender_id"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="sender id"
+            android:summary="Необходим для получения gsm токена. При перезаписи необходимо перезапустить приложение"
+        />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="network"
+        android:title="Сеть"
+    >
+        <EditTextPreference
+        android:defaultValue="https://emp.mos.ru"
+        android:key="backend_url"
         android:singleLine="true"
-        android:title="Edit some preference" />
+        android:title="back-end endpoint"
+        android:summary="URL сервера приложения. Необходимо указывать с указанием протокола и без слеша в конце"
+        />
+        <EditTextPreference
+            android:defaultValue="420247b56019237864d7d1534fe476ca"
+            android:key="service_token"
+            android:singleLine="true"
+            android:title="service token"
+            android:summary="Токен сервиса в ЕМП"
+        />
+    </PreferenceCategory>
 </PreferenceScreen>
