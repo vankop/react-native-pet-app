@@ -1,13 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
 import { RootStack } from './src/containers/navigation';
 import {Provider} from 'react-redux';
 import store from './src/redux/store';
+import { listenSettings, unlistenSettings } from './src/settings/index';
 
 console.disableYellowBox = true;
 
 export default class App extends React.Component {
+    constructor() {
+        super();
+
+        listenSettings();
+    }
+
+    componentWillUnmount() {
+        unlistenSettings();
+    }
+
     render() {
         return (
             <Provider store={store}>
@@ -16,12 +26,3 @@ export default class App extends React.Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

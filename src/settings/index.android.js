@@ -1,12 +1,12 @@
-import RNAndroidNativeSettings from 'react-native-android-native-app-settings';
+import AppSettings from 'react-native-android-native-app-settings';
 import {handle} from '../utils/async';
 import Logger from '../utils/logger';
 
 async function getSettings() {
     const [error, values] = await handle(Promise.all([
-        RNAndroidNativeSettings.getString('sender_id'),
-        RNAndroidNativeSettings.getString('backend_url'),
-        RNAndroidNativeSettings.getString('service_token')
+        AppSettings.getString('sender_id'),
+        AppSettings.getString('backend_url'),
+        AppSettings.getString('service_token')
     ]));
 
     if (error) {
@@ -32,3 +32,25 @@ async function getSettings() {
 }
 
 export default getSettings();
+
+const backEndEndpointSubscribes = [];
+
+export function subscribeEndPoint(callback) {
+    backEndEndpointSubscribes.push(callback);
+}
+
+function listener(key) {
+    if (key === 'backend_url') {
+        AppSettings
+            .getString('backend_url')
+            .then(url => backEndEndpointSubscribes.forEach(callback => callback(url)));
+    }
+}
+
+export function listenSettings() {
+    AppSettings.listenChanges(listener);
+}
+
+export function unlistenSettings() {
+    AppSettings.unlistenChanges();
+}
