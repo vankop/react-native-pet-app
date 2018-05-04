@@ -5,8 +5,9 @@
         android:title="Push нотификации"
     >
         <EditTextPreference
-            android:defaultValue="434944116762"
+            android:defaultValue="@string/default_sender_id"
             android:key="sender_id"
+            android:persistent="true"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="sender id"
@@ -21,10 +22,12 @@
         android:defaultValue="https://emp.mos.ru"
         android:key="backend_url"
         android:singleLine="true"
+        android:persistent="true"
         android:title="back-end endpoint"
         android:summary="URL сервера приложения. Необходимо указывать с указанием протокола и без слеша в конце"
         />
         <EditTextPreference
+            android:persistent="true"
             android:defaultValue="420247b56019237864d7d1534fe476ca"
             android:key="service_token"
             android:singleLine="true"

@@ -1,4 +1,4 @@
-import { LOG_PREFIX } from 'react-native-dotenv'
+const LOG_PREFIX = 'APP_LOG-->>';
 
 export default class Logger {
     static prefix = LOG_PREFIX;

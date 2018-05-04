@@ -1,23 +1,33 @@
-import { SENDER_ID, API_TOKEN, BACKEND_URL } from 'react-native-dotenv';
+import RNAndroidNativeSettings from 'react-native-android-native-app-settings';
 import {handle} from '../utils/async';
 import Logger from '../utils/logger';
 
 async function getSettings() {
-    const [error, values] = await handle(new Promise(resolve => setTimeout(resolve, 1000)));
-        //TODO extract shared references
-        // SharedPreferences.getItems(['sender_id', 'backend_url', 'service_token'], values => resolve(values))));
+    const [error, values] = await handle(Promise.all([
+        RNAndroidNativeSettings.getString('sender_id'),
+        RNAndroidNativeSettings.getString('backend_url'),
+        RNAndroidNativeSettings.getString('service_token')
+    ]));
 
     if (error) {
         Logger.error(error);
         throw error;
     }
 
-    // const [gsmSenderId, backendEndpoint, empToken] = values;
+    const [
+        gsmSenderId,
+        backendEndpoint,
+        empToken
+    ] = values;
+
+    Logger.debug('SENDER_ID', gsmSenderId);
+    Logger.debug('BACKEND_URL', backendEndpoint);
+    Logger.debug('SERVICE_TOKEN', empToken);
 
     return {
-        gsmSenderId: SENDER_ID,
-        backendEndpoint: BACKEND_URL,
-        empToken: API_TOKEN
+        gsmSenderId,
+        backendEndpoint,
+        empToken
     };
 }
 

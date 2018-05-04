@@ -2,8 +2,10 @@ package com.reactnativepetapp;
 
 import android.app.Application;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativeappsettings.RNAndroidNativeAppSettingsPackage;
 import com.reactlibrary.securekeystore.RNSecureKeyStorePackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -27,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new RNAndroidNativeAppSettingsPackage(),
             new RNSecureKeyStorePackage(),
             new ReactNativePushNotificationPackage(),
             new VectorIconsPackage()
