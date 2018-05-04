@@ -31,13 +31,8 @@ export class LoadingScreen extends Component {
         super();
         Logger.info('checking session');
 
-        this.state = {
-            error: false
-        };
-
         settings
-            .then(checkAppState)
-            .catch(() => this.setState({ error: true }));
+            .then(checkAppState);
     }
 
     render() {
