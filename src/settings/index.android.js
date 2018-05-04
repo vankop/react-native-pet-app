@@ -1,4 +1,5 @@
 import AppSettings from 'react-native-android-native-app-settings';
+import { DeviceEventEmitter } from 'react-native';
 import {handle} from '../utils/async';
 import Logger from '../utils/logger';
 
@@ -39,7 +40,8 @@ export function subscribeEndPoint(callback) {
     backEndEndpointSubscribes.push(callback);
 }
 
-function listener(key) {
+function listener({ key }) {
+    Logger.debug('LISTENER', `key changed: ${key}`);
     if (key === 'backend_url') {
         AppSettings
             .getString('backend_url')
@@ -48,9 +50,11 @@ function listener(key) {
 }
 
 export function listenSettings() {
-    AppSettings.listenChanges(listener);
+    AppSettings.listenChanges();
+    DeviceEventEmitter.addListener('preferencesChanged', listener);
 }
 
 export function unlistenSettings() {
     AppSettings.unlistenChanges();
+    DeviceEventEmitter.removeListener('preferencesChanged', listener);
 }
