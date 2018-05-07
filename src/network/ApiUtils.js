@@ -1,14 +1,21 @@
 ﻿import Device from '../security/device';
 import { handle } from '../utils/async';
 import Logger from '../utils/logger';
-import settings from '../settings/index';
+import settings, {
+    subscribeEndPoint,
+    subscribeEmpToken
+} from '../settings/index';
 
 let endpoint, token;
 
-settings.then(({ backendEndpoint,  empToken }) => {
-    endpoint = backendEndpoint;
-    token = empToken;
-});
+settings
+    .then(({ backendEndpoint,  empToken }) => {
+        endpoint = backendEndpoint;
+        token = empToken;
+    }).then(() => {
+        subscribeEmpToken(newToken => token = newToken);
+        subscribeEndPoint(newEndpoint => endpoint = newEndpoint);
+    });
 
 const requestSecondsTimeOut = 15;
 

@@ -3,11 +3,15 @@ import { DeviceEventEmitter } from 'react-native';
 import {handle} from '../utils/async';
 import Logger from '../utils/logger';
 
+const SENDER_ID = 'sender_id';
+const BACKEND_ENDPOINT = 'backend_url';
+const EMP_TOKEN = 'service_token';
+
 async function getSettings() {
     const [error, values] = await handle(Promise.all([
-        AppSettings.getString('sender_id'),
-        AppSettings.getString('backend_url'),
-        AppSettings.getString('service_token')
+        AppSettings.getString(SENDER_ID),
+        AppSettings.getString(BACKEND_ENDPOINT),
+        AppSettings.getString(EMP_TOKEN)
     ]));
 
     if (error) {
@@ -34,18 +38,31 @@ async function getSettings() {
 
 export default getSettings();
 
-const backEndEndpointSubscribes = [];
+const backEndEndpointSubscribers = [];
+const empTokenSubscribers = [];
 
 export function subscribeEndPoint(callback) {
-    backEndEndpointSubscribes.push(callback);
+    backEndEndpointSubscribers.push(callback);
+}
+
+export function subscribeEmpToken(callback) {
+    empTokenSubscribers.push(callback);
 }
 
 function listener({ key }) {
     Logger.debug('LISTENER', `key changed: ${key}`);
-    if (key === 'backend_url') {
+    switch (key) {
+    case BACKEND_ENDPOINT:
         AppSettings
-            .getString('backend_url')
-            .then(url => backEndEndpointSubscribes.forEach(callback => callback(url)));
+            .getString(BACKEND_ENDPOINT)
+            .then(url => backEndEndpointSubscribers.forEach(callback => callback(url)));
+        break;
+    case EMP_TOKEN:
+        AppSettings
+            .getString(EMP_TOKEN)
+            .then(url => backEndEndpointSubscribers.forEach(callback => callback(url)));
+    default:
+        break;
     }
 }
 
