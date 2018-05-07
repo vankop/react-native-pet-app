@@ -19,6 +19,7 @@ import MenuButton from '../components/MenuButton';
 import HeaderLeft from '../components/HeaderLeft';
 import styles from '../design/styles';
 import MessagesScreen from './authorized/MessagesScreen';
+import MapScreen from './authorized/MapScreen';
 
 const MainStack = StackNavigator({
     Home: {
@@ -34,8 +35,22 @@ const MainStack = StackNavigator({
             headerStyle: styles.fill
         })
     }
-}, {
+});
 
+const MapStack = StackNavigator({
+    Map: {
+        screen: MapScreen,
+        navigationOptions: ({navigation}) => ({
+            title: 'Карта',
+            headerLeft: (
+                <HeaderLeft>
+                    <MenuButton navigation={navigation} />
+                </HeaderLeft>
+            ),
+            headerTitleStyle: styles.headerStyle,
+            headerStyle: styles.fill
+        })
+    }
 });
 
 const ProfileStack = StackNavigator({
@@ -92,6 +107,13 @@ const AppStack = DrawerNavigator({
         navigationOptions: {
             title: 'Сообщения',
             drawerIcon: <Icon name="drafts" color={mainColor} size={icons.size.small} />
+        }
+    },
+    Map: {
+        screen: MapStack,
+        navigationOptions: {
+            title: 'Карта',
+            drawerIcon: <Icon name="layers" color={mainColor} size={icons.size.small} />
         }
     }
 }, {

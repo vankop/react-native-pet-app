@@ -2,10 +2,10 @@ package com.reactnativepetapp;
 
 import android.app.Application;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.facebook.react.ReactApplication;
 import com.reactnativeappsettings.RNAndroidNativeAppSettingsPackage;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.reactlibrary.securekeystore.RNSecureKeyStorePackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -28,11 +28,12 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-            new MainReactPackage(),
-            new RNAndroidNativeAppSettingsPackage(),
-            new RNSecureKeyStorePackage(),
-            new ReactNativePushNotificationPackage(),
-            new VectorIconsPackage()
+        new MainReactPackage(),
+        new RNAndroidNativeAppSettingsPackage(),
+        new RNSecureKeyStorePackage(),
+        new ReactNativePushNotificationPackage(),
+        new MapsPackage(),
+        new VectorIconsPackage()
       );
     }
 
