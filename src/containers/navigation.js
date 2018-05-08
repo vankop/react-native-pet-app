@@ -113,7 +113,7 @@ const AppStack = DrawerNavigator({
         screen: MapStack,
         navigationOptions: {
             title: 'Карта',
-            drawerIcon: <Icon name="layers" color={mainColor} size={icons.size.small} />
+            drawerIcon: <Icon name="map" color={mainColor} size={icons.size.small} />
         }
     }
 }, {

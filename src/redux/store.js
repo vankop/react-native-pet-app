@@ -13,6 +13,7 @@ import appState from './reducers/appState';
 import session from './reducers/session';
 import profileStore from './stores/profileStore';
 import {messagesStore} from './stores/messagesStore';
+import mapDataStore from './stores/mapDataStore';
 
 let middleware;
 
@@ -29,6 +30,7 @@ export default createStore(enableBatching(combineReducers({
     form: formReducer,
     appState,
     session,
+    mapData: mapDataStore.reducer,
     profile: profileStore.reducer,
     messages: messagesStore.reducer,
     filters: filterReducer

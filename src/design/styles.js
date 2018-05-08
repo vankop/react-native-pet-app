@@ -93,5 +93,10 @@ export default StyleSheet.create({
     block: {
         paddingLeft: 10,
         paddingRight: 10
+    },
+    map: {
+        ...StyleSheet.absoluteFillObject,
+        justifyContent: 'flex-end',
+        alignItems: 'stretch'
     }
 });
