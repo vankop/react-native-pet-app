@@ -66,7 +66,7 @@ export default class Message extends PureComponent {
             <Touchable onPress={this._handleDeletePress}>
                 <Icon
                     name="close"
-                    size={icons.size.medium}
+                    size={icons.size.small}
                     color={mainColor}
                 />
             </Touchable>

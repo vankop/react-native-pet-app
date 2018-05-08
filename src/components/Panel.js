@@ -56,7 +56,7 @@ export default function Panel({
             <Icon
                 name={visible ? 'expand-less' : 'expand-more'}
                 color={mainColor}
-                size={icons.size.medium}
+                size={icons.size.small}
             />
         </View>
     );
