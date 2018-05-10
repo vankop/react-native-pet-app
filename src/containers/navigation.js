@@ -19,7 +19,7 @@ import MenuButton from '../components/MenuButton';
 import HeaderLeft from '../components/HeaderLeft';
 import styles from '../design/styles';
 import MessagesScreen from './authorized/MessagesScreen';
-import MapScreen from './authorized/MapScreen';
+import MapScreen from './authorized/Map/MapScreen';
 
 const MainStack = StackNavigator({
     Home: {

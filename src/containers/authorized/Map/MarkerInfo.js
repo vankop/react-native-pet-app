@@ -7,27 +7,29 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Touchable from 'react-native-platform-touchable';
 import PropTypes from 'prop-types';
 
-import Panel from '../../components/Panel';
-import icons from '../../design/icons';
-import {mainColor} from '../../design/colors';
-import styles from '../../design/styles';
+import Panel from '../../../components/Panel';
+import icons from '../../../design/icons';
+import {mainColor} from '../../../design/colors';
+import styles from '../../../design/styles';
+import {geoFeaturePropType} from '../../../types/geo';
 
 export default class MarkerInfo extends Component {
     static propTypes = {
         onClose: PropTypes.func.isRequired,
         onMove: PropTypes.func.isRequired,
-        title: PropTypes.string,
-        description: PropTypes.string,
-        location: PropTypes.shape({
-            latitude: PropTypes.number.isRequired,
-            longitude: PropTypes.number.isRequired
-        }).isRequired
+        marker: PropTypes.shape(geoFeaturePropType).isRequired
     };
 
     render() {
         const {
-            title,
-            description,
+            marker: {
+                properties: {
+                    item: {
+                        NAME: description,
+                        SPEC: title
+                    }
+                }
+            },
             onClose,
             onMove
         } = this.props;
