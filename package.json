@@ -18,7 +18,9 @@
     "log:android": "react-native log-android",
     "ios": "react-native run-ios",
     "postinstall": "remotedev-debugger --hostname=localhost --port=8000 --injectserver=reactnative",
-    "test": "jest"
+    "test": "jest",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "jest": {
     "preset": "react-native"
@@ -42,6 +44,8 @@
     "redux-batched-actions": "^0.2.1",
     "redux-form": "^7.3.0",
     "redux-thunk": "^2.2.0",
-    "supercluster": "^3.0.2"
-  }
+    "supercluster": "^3.0.2",
+    "snyk": "^1.88.0"
+  },
+  "snyk": true
 }
